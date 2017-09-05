@@ -89,7 +89,6 @@ def pwn():
 
 	p.interactive()
 
-
 if __name__ == "__main__":
     log.info("For remote: %s HOST PORT" % sys.argv[0])
     if len(sys.argv) > 1:
