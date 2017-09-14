@@ -95,7 +95,6 @@ The player's name is free'd first and then the player's chunk itself. However, t
 00401bd1  call    free
              [...]
 ```
----
 
 ### _Exploit Visualization_
 
