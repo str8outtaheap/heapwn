@@ -346,7 +346,6 @@ if (!prev_inuse(p)) {
       prevsize = p->prev_size;
       size += prevsize;
       p = chunk_at_offset(p, -((long) prevsize));
-      /* Classic double-linked list unlinking */
       unlink(av, p, bck, fwd);
 }
 ```
