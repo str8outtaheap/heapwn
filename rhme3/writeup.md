@@ -73,21 +73,16 @@ The player's name is free'd first and then the player's chunk itself. However, t
 
 ```asm
              [...]
-/* index */
-00401b9c  mov     eax, dword [rbp-0x1c]
-/* player struct pointer */
-00401b9f  mov     rax, qword [rax*8+0x603180] 
+00401b9c  mov     eax, dword [rbp-0x1c]       ; index
+00401b9f  mov     rax, qword [rax*8+0x603180] ; player struct pointer 
 00401ba7  mov     qword [rbp-0x18], rax
 00401bab  mov     eax, dword [rbp-0x1c]
-/* Mitigate double-free, good shit */
-00401bae  mov     qword [rax*8+0x603180], 0x0 
+00401bae  mov     qword [rax*8+0x603180], 0x0 ; mitigate double-free, good shit
 00401bba  mov     rax, qword [rbp-0x18]
-/* player's name pointer */
-00401bbe  mov     rax, qword [rax+0x10]      
+00401bbe  mov     rax, qword [rax+0x10]       ; player's name pointer   
 00401bc2  mov     rdi, rax
 00401bc5  call    free
-/* player's chunk */
-00401bca  mov     rax, qword [rbp-0x18]   
+00401bca  mov     rax, qword [rbp-0x18]       ; player's chunk
 00401bce  mov     rdi, rax
 00401bd1  call    free
              [...]
