@@ -300,7 +300,7 @@ Now the question is, how do we get arbitrary code execution? Instead of exploiti
 free(3) 
 ```
 
-```makefile
+```
 0x604120:	0x0000000000000000	0x00000000000000b1 <-- player 2 [free]
 0x604130:	0x00007ffff7dd37b8	0x00007ffff7dd37b8
 0x604140:	0x0000000000604150	0x0000000000000091
