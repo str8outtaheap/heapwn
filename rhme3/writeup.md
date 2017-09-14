@@ -334,13 +334,13 @@ Malloc doesn't like fragmentation, so what it did was consolidate any adjacent f
 
 Now consider the following. What's going to happen on the next allocation? 
 
-* Remember, each player object has a default size of _0x20_ and a pointer pointing to an arbitrary size chunk depending on the length of our input.
+* Remember, each player object has a default size of `0x20` and a pointer pointing to an arbitrary size chunk depending on the length of our input.
 
-* When we allocate a new chunk, malloc will check the corresponding bin list according to the size request and check if there's an equivalent free chunk of the same size to serve back to the user. That's the so called **first-fit behavior**. Keep in mind, deletion and addition in fastbins happens from the **HEAD** of the list. In other words, we should be expecting the player's info to get stored at _0x6041d0_ since it's a free chunk of fastbin size and meets the _0x20_ requirement.
+* When we allocate a new chunk, malloc will check the corresponding bin list according to the size request and check if there's an equivalent free chunk of the same size to serve back to the user. That's the so called **first-fit behavior**. Keep in mind, deletion and addition in fastbins happens from the **HEAD** of the list. In other words, we should be expecting the player's info to get stored at `0x6041d0` since it's a free chunk of fastbin size and meets the `0x20` requirement.
 
-* The unsorted bin holds the address _0x604120_. That's the address of the player 2's chunk. That was not the same address as before the **free(3)**. That's because malloc consolidated the adjacent free chunks and they became one entire free chunk, so it had to update the address. The code corresponding to the adjacency check is this:
+* The unsorted bin holds the address `0x604120`. That's the address of the player 2's chunk. That was not the same address as before the **free(3)**. That's because malloc consolidated the adjacent free chunks and they became one entire free chunk, so it had to update the address. The code corresponding to the adjacency check is this:
 
-```
+```c
 /* consolidate backward */
 if (!prev_inuse(p)) {
       prevsize = p->prev_size;
@@ -351,9 +351,9 @@ if (!prev_inuse(p)) {
 }
 ```
 
-* No matter what the size of the name we enter (as long as it's not bigger than the chunk that is currently in the unsorted bin list, _0xb0_ in our case), we should get back the address _0x604120_ in order to store the name. If the size is less than _0xb0_, the given chunk will get split since there's no need to give back more than what we ask for, right?
+* No matter what the size of the name we enter (as long as it's not bigger than the chunk that is currently in the unsorted bin list, `0xb0` in our case), we should get back the address `0x604120` in order to store the name. If the size is less than `0xb0`, the given chunk will get split since there's no need to give back more than what we ask for, right?
 
-* However, _0x604120_ is the address of player 2's chunk! Meaning, we can overwrite its data with our surgically picked name payload and mess with its structure. Remember, player 2 is still in the _selected_ variable, so we can still print its content, edit it etc. What if we were able to overwrite the pointer to the original name, with a pointer of our choice (a GOT entry) and call the function _edit_ on it? We would be able to redirect code execution. That's an abritrary write primitive! 
+* However, `0x604120` is the address of player 2's chunk! Meaning, we can overwrite its data with our surgically picked name payload and mess with its structure. Remember, player 2 is still in the **selected** variable, so we can still print its content, edit it etc. What if we were able to overwrite the pointer to the original name, with a pointer of our choice (a GOT entry) and call the function `edit` on it? We would be able to redirect code execution. That's an abritrary write primitive! 
 
 ```python
 # Overwrite 3rd player's (index 2) name pointer with atoi
@@ -363,7 +363,7 @@ alloc('Z'*8 * 2 + p64(atoi_got))
 edit(p64(system))
 ```
 
-The function's GOT entry I chose to overwrite was _atoi_. The reason behind this is that _atoi_ receives a pointer to our input in order to convert it back to an integer. What if _atoi_ is _system_ though? What's going to happen if we provide _sh_ as an argument to what it's supposed to be _atoi_? Bingo ;)
+The function's GOT entry I chose to overwrite was _atoi_. The reason behind this is that `atoi` receives a pointer to our input in order to convert it back to an integer. What if `atoi` is `system` though? What's going to happen if we provide `sh` as an argument to what it's supposed to be `atoi`? Bingo ;)
 
 ```
 0x604120:	0x0000000000000000	0x0000000000000021 <-- new player's name [old player 2]
@@ -382,7 +382,7 @@ The function's GOT entry I chose to overwrite was _atoi_. The reason behind this
 0x6041f0:	0x0000000000604130
 ```
 
-Game over, player 2's original name pointer has been overwritten with atoi's GOT entry. Once we request to edit its name, we'll overwrite atoi's entry with system's address.
+Game over, player 2's original name pointer has been overwritten with `atoi's` GOT entry. Once we request to edit its name, we'll overwrite `atoi's` entry with `system's` address.
 
 ---
 
@@ -510,21 +510,5 @@ if __name__ == "__main__":
         pause()
         pwn()
 ```
-
-```
- >> python rhme3.py
-[*] For remote: rhme3.py HOST PORT
-[+] Starting local process './main.elf': pid 29567
-[*] Paused (press any to continue)
-[*] Leak:   0x7ffff7dd37b8
-[*] Libc:   0x7ffff7a12000
-[*] system: 0x7ffff7a58590
-[*] Overwriting atoi with system
-[*] Switching to interactive mode
-$ whoami
-vagrant
-
-```
-
 
 ~ Peace!
