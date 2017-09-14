@@ -39,7 +39,6 @@ struct player {
 
 * Note that in order to do the two aforementioned actions, we need to first **select** the player by entering an idex. Really important info to remember for later.
 
----
 
 ### _Reverse Engineering_
 
