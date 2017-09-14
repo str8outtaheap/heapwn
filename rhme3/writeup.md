@@ -362,7 +362,7 @@ alloc('Z'*8 * 2 + p64(atoi_got))
 edit(p64(system))
 ```
 
-The function's GOT entry I chose to overwrite was _atoi_. The reason behind this is that `atoi` receives a pointer to our input in order to convert it back to an integer. What if `atoi` is `system` though? What's going to happen if we provide `sh` as an argument to what it's supposed to be `atoi`? Bingo ;)
+The function's GOT entry I chose to overwrite was `atoi`. The reason behind this is that `atoi` receives a pointer to our input in order to convert it back to an integer. What if `atoi` is `system` though? What's going to happen if we provide `sh` as an argument to what it's supposed to be `atoi`? Bingo ;)
 
 ```
 0x604120:	0x0000000000000000	0x0000000000000021 <-- new player's name [old player 2]
