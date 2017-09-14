@@ -376,7 +376,6 @@ The function's GOT entry I chose to overwrite was `atoi`. The reason behind this
 
 Game over, player 2's original name pointer has been overwritten with `atoi's` GOT entry. Once we request to edit its name, we'll overwrite `atoi's` entry with `system's` address.
 
----
 
 ### _Exploit_
 
