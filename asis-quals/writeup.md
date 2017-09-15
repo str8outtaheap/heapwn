@@ -306,7 +306,7 @@ its FD will be placed on top of the list, leading to the next allocation giving 
 
 Now you might be wondering why did I overwrite the FD with `malloc_hook - 0x23`. That's because of the following check malloc does:
 
-```
+```c
 if (__builtin_expect (fastbin_index (chunksize (victim)) != idx, 0))
 {
     errstr = "malloc(): memory corruption (fast)";
