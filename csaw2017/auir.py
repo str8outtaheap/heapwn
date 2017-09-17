@@ -3,8 +3,8 @@ from pwn import *
 '''
 HOST = pwn.chal.csaw.io
 PORT = 7713
-https://asciinema.org/a/IARN4KoGyVYbDai3Je3dXJM95
-flag{W4rr10rs!_A1ur_4wa1ts_y0u!_M4rch_f0rth_and_t4k3_1t!}
+PoC:  https://asciinema.org/a/IARN4KoGyVYbDai3Je3dXJM95
+Flag: flag{W4rr10rs!_A1ur_4wa1ts_y0u!_M4rch_f0rth_and_t4k3_1t!}
 '''
 
 free_got = 0x605060
