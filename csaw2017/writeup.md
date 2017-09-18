@@ -38,7 +38,7 @@ This is the meat of the binary. We've got a global array of malloc'd pointers at
 Although the binary is overall messy, we can get a pretty accurate idea of what's up with its functionality just with the above lines of assembly. Let's develop a visual image of how the binary actually handles the heap while stepping through my exploit.
 
 
-###_Exploit Visualization_
+### _Exploit Visualization_
 
 ```python
 alloc(0x80, 'A'*10) # chunk 1
@@ -160,7 +160,7 @@ libc = leak - 0x3c4b78
 We're one step closer to total pwning. It's time to take advantage of the double-free form of UAF and bring the flag home.
 
 
-###_Fastbin Attack_
+### _Fastbin Attack_
 
 Before I begin explaining the hows and whys of the fastbin attack, I'd like to give a huge shoutout to shellphish who created the [how2heap](https://github.com/shellphish/how2heap) repo which basically documents modern heap exploitation techniques. I highly recommend going through the code examples and figuring out the heap internals by tweaking and debugging.
 
@@ -692,7 +692,7 @@ fastbinsY[] alloc(0x68)
 Brilliant! Let's pwn this binary once and for all.
 
 
-###_Pwning Time_
+### _Pwning Time_
 
 * The `edit` function receives an index as input and then picks the corresponding entry from the global array in order to overwrite its content with our desired input. I picked `free` as the victim GOT entry because it receives one argument, like `system`.
 
