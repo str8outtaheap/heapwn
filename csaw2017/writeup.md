@@ -719,7 +719,7 @@ Voila! `free`'s GOT entry officially points to `system`'s address! Let's bring t
 free(1)
 ```
 
-```makefile
+```
 [*] Leak:        0x7fa077b3fb78
 [*] Libc:        0x7fa07777b000
 [*] system:      0x7fa0777c0390
