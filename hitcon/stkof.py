@@ -41,8 +41,6 @@ def free(idx):
 	r.sendline('3')
 	r.sendline(str(idx))
 
-	#r.recvuntil('OK\n')
-
 	return
 
 def pwn():
