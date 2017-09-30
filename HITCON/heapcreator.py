@@ -1,3 +1,5 @@
+# --==[[ Off-by-One overflow => unsafe unlink
+
 from pwn import *
 
 atoi_got = 0x602060
