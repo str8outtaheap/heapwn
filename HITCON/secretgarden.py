@@ -1,3 +1,5 @@
+# --==[[ Fastbin Attack
+
 from pwn import *
 
 magic    = 0x400c7b
