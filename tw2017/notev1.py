@@ -14,7 +14,7 @@ def alloc(size, data):
 	r.sendlineafter('choice: \n', '1')
 	r.sendlineafter('size: \n', str(size))
 
-	if data < size:
+	if len(data) < size:
 		data += "\n"
 
 	r.sendafter('note: \n', data)
@@ -26,7 +26,7 @@ def edit(idx, data):
 	r.sendlineafter('choice: \n', '4')
 	r.sendlineafter('index: \n', str(idx))
 
-	if data < size:
+	if len(data) < size:
 		data += "\n"
 
 	r.sendafter('note: \n', data)
