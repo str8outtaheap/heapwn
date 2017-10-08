@@ -26,9 +26,6 @@ def edit(idx, data):
 	r.sendlineafter('choice: \n', '4')
 	r.sendlineafter('index: \n', str(idx))
 
-	if len(data) < size:
-		data += "\n"
-
 	r.sendafter('note: \n', data)
 
 	return
