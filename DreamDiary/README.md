@@ -1,1 +1,1 @@
-Self-made pwnables for practice purposes.
+Self-made pwnable for practice purposes.
