@@ -3,8 +3,11 @@ Heap exploitation is a dark art to me. This repo is an attempt to document my fi
 
 ## Resources
 
-~ [how2heap](https://github.com/shellphish/how2heap)
+* [how2heap](https://github.com/shellphish/how2heap)
 
-~ [Understanding glibc malloc](https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/)
+* [Understanding glibc malloc](https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/)
 
-~ [Heap Exploitation](https://heap-exploitation.dhavalkapil.com/)
+* [Heap Exploitation](https://heap-exploitation.dhavalkapil.com/)
+
+* [tukan](http://tukan.farm/)
+
