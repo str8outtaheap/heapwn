@@ -9,6 +9,8 @@ Heap exploitation is a dark art to me. This repo is an attempt to document my fi
 
 * [Heap Exploitation](https://heap-exploitation.dhavalkapil.com/)
 
+* [Memory Allocator Implementations](https://github.com/emeryberger/Malloc-Implementations)
+
 * [tukan](http://tukan.farm/)
 
 * [mehQQ](https://github.com/mehQQ)
