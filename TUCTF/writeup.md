@@ -7,7 +7,7 @@ NX:       NX enabled
 PIE:      No PIE (0x400000)
 ```
 
-Custom allocator & partial RELRO. Sounds like a heap exploitation & GOT overwrite business ;) To begin with, we were given a binary with a custom dynamic [memory allocator](). Instead of analyzing its algorithm line by line (the memory allocator's implementation was given), I'll walk you through its key features via my exploit. To give you a brief idea, it's an overly simplified version of malloc. There are 0 (maybe I missed some while I'm writing this) security checks in terms of allocating/free-ing chunks. For the rest of the write-up I'll be refering to the provided allocator as "malloc". An allocated chunk has the following structure:
+Custom allocator & partial RELRO. Sounds like a heap exploitation & GOT overwrite business ;) To begin with, we were given a binary with a custom dynamic [memory allocator](https://github.com/xerof4ks/heapwn/blob/master/TUCTF/mm.c). Instead of analyzing its algorithm line by line (the memory allocator's implementation was given), I'll walk you through its key features via my exploit. To give you a brief idea, it's an overly simplified version of malloc. There are 0 (maybe I missed some while I'm writing this) security checks in terms of allocating/free-ing chunks. For the rest of the write-up I'll be refering to the provided allocator as "malloc". An allocated chunk has the following structure:
 
 ```
 Both allocated and free blocks share the same header structure.           
