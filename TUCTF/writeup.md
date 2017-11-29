@@ -390,7 +390,7 @@ static bool extract_alloc(word_t word)
 }
 ```
 
-Which depends on the return value of `find_prev_footer`, which returns the address of the *footer of the previous chunk* (meaning `0x625280`, meaning data pointer 9's `footer` field in our case):
+Which depends on the return value of `find_prev_footer`, which returns the address of the **footer of the previous chunk** (meaning `0x625280`, meaning data pointer 9's `footer` field in our case):
 
 ```c
 /*
