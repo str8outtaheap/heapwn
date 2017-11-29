@@ -152,7 +152,7 @@ We have the following line in the exploit:
 edit(9, 'A'*(0x30) + p8(0xd0))
 ```
 
-According to `readbytes`, it will read in `size + 0x1` bytes and store it in the data pointer. Meaning 0x32, where the 0x32th byte will be the null byte (that's how `fgets` works). Chunk 9's data pointer is `0x625250`. `0x625250 + 0x32 == 0x625282`. That means we get to overwrite the `footer` field of chunk 9 whose usage is crucial for the `coalesce` function which we will inspect soon.
+According to `readbytes`, it will read in `size + 0x1` bytes and store it in the data pointer. Meaning 0x32, where the 0x32th byte will be the null byte (that's how `fgets` works). Chunk 9's data pointer is `0x625250`. `0x625250 + 0x32 == 0x625282`. That means we get to overwrite the `footer` field of chunk 9's data pointer whose usage is crucial for the `coalesce` function which we will inspect soon.
 
 
 ```
