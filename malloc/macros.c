@@ -1,5 +1,3 @@
-/* Important macros */
-
 #define chunk2mem(p)   ((void*)((char*)(p) + 2*SIZE_SZ))
 
 #define mem2chunk(mem) ((mchunkptr)((char*)(mem) - 2*SIZE_SZ))
