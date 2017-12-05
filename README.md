@@ -13,4 +13,3 @@ Heap exploitation is a dark art to me. This repo is an attempt to document my fi
 
 * [tukan](http://tukan.farm/)
 
-* [mehQQ](https://github.com/mehQQ)
