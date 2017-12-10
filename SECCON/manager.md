@@ -265,7 +265,7 @@ alloc(-10,  'F'*0x18 + p32(0x181), 'D'*8)  # 0
 We have successfully ovewritten `chunk y`'s size with the value **0x181**. This size is big enough to overwrite the unsorted chunk
 at address `0x6030b0` and furthermore overwrite its BK pointer in order to perform the unsorted bin attack.
   
-### Unsorted bin to _IO_list_all attack
+### Unsorted bin 2 _IO_list_all attack
 
 If we were to call edit on `chunk y`, `musable` wouldn't let us enter any bytes because of the `inuse(p)` check which would
 let `musable` know that the chunk is actually free'd.
