@@ -47,9 +47,9 @@ Once a key has been added, two actions take place. Firstly, key's address is pla
 `0x6020e0`. Secondly, there is a bytearray which works as a switch in order to signify when a chunk is free or not. On a fresh
 allocation, the corresponding pointer array index becomes **1** in the bytearray and during deletion it becomes **0**.
 
-![img1]()
+![img1](https://github.com/xerof4ks/heapwn/blob/master/SECCON/img/add_key.png)
 
-![img2]()
+![img2](https://github.com/xerof4ks/heapwn/blob/master/SECCON/img/add_key2.png)
 
 #### ~ Edit
 
@@ -57,7 +57,7 @@ By choosing `edit` we can edit the `key` member of the struct. `edit` uses `mall
 on the current chunk in order to extract its size, then subtracts **0x20** from it and finally call `getnline` which will read 
 in the new key.
 
-![img3]()
+![img3](https://github.com/xerof4ks/heapwn/blob/master/SECCON/img/edit_key.png)
 
 #### ~ Remove
 
@@ -65,7 +65,7 @@ in the new key.
 value in the bytearray. There is definitely a way to create a double-free scenario via this indirect UAF but I didn't purse this
 path towards exploiting the binary. 
 
-![img4]()
+![img4](https://github.com/xerof4ks/heapwn/blob/master/SECCON/img/remove_key.png)
 
 ### Exploit Analysis
 
@@ -77,7 +77,7 @@ In case we want to change the master pass, we have to enter the previous account
 However, because of the fact that read doesn't null terminate strings, we can get a leak out of it. Specifically, if we enter
 the wrong account name, the binary will just print whatever we entered.
 
-![leak]()
+![leak](https://github.com/xerof4ks/heapwn/blob/master/SECCON/img/leak.png)
 
 ```python
 acc    = "kek"
