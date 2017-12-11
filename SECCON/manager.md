@@ -360,7 +360,7 @@ In order to fall under this case:
 
 ```c
 /* remove from unsorted list */
-unsorted_chunks (av)->bk = bck;   // Make 0x7fc503f5b510 the new unsorted bin
+unsorted_chunks (av)->bk = bck;   
 bck->fd = unsorted_chunks (av);
 ```
 
