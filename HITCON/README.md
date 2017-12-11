@@ -1,1 +1,1 @@
-My exploits on the heap pwnables from [HITCON Training Lab](https://github.com/scwuaptx/HITCON-Training) and their CTFs. The exploits whose corresponding pwnables aren't uploaded on my repo, can be found at the aforementioned link.
+My exploits on the heap pwnables from [HITCON Training Lab](https://github.com/scwuaptx/HITCON-Training) and their CTFs.
