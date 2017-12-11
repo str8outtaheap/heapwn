@@ -74,7 +74,7 @@ Now that we've established how the binary works, let's get to pwning. First thin
 #### ~ Libc Leak
 
 In case we want to change the master pass, we have to enter the previous account name in order to be prompted with a new input. 
-However, because of the fact that read doesn't null terminate strings, we can get a leak out of it. Specifically, if we enter
+However, because of the fact that `read` doesn't null terminate strings, we can get a leak out of it. Specifically, if we enter
 the wrong account name, the binary will just print whatever we entered.
 
 ![leak](https://github.com/xerof4ks/heapwn/blob/master/SECCON/img/leak.png)
