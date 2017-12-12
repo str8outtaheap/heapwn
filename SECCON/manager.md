@@ -54,7 +54,7 @@ allocation, the corresponding pointer array index becomes **1** in the bytearray
 #### ~ Edit
 
 By choosing `edit` we can edit the `key` member of the struct. `edit` uses `malloc_usable_size` which internally calls `musable`,
-on the current chunk in order to extract its size, then subtracts **0x20** from it and finally call `getnline` which will read 
+on the current chunk in order to extract its size, then subtracts **0x20** from it and finally calls `getnline` which will read 
 in the new key.
 
 ![img3](https://github.com/xerof4ks/heapwn/blob/master/SECCON/img/edit_key.png)
@@ -62,7 +62,7 @@ in the new key.
 #### ~ Remove
 
 `Remove` free's **only** the malloc pointer, it doesn't zero out the entry in the chunk array. However, it does zero out the byte
-value in the bytearray. There is definitely a way to create a double-free scenario via this indirect UAF but I didn't purse this
+value in the bytearray. There is definitely a way to create a double-free scenario via this indirect UAF but I didn't pursue this
 path towards exploiting the binary. 
 
 ![img4](https://github.com/xerof4ks/heapwn/blob/master/SECCON/img/remove_key.png)
