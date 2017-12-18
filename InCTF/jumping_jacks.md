@@ -320,7 +320,7 @@ struct _IO_jump_t
 
 After this quick refresher, let's get back to the pwnable.
 
-### Exploiation Analysis
+### Exploitation Analysis
 
 The goal is to redirect code execution by fooling the binary into thinking that `/dev/null`'s file stream is somewhere else on
 the heap along with its vtable so that instead of calling `fclose(fp)` it will call `system("sh")`. Because of the fact that `edit`
