@@ -484,7 +484,8 @@ _IO_new_fclose (fp)
 
   _IO_acquire_lock (fp);
   if (fp->_IO_file_flags & _IO_IS_FILEBUF)
-    status = _IO_file_close_it (fp); /* will try to call whatever is at the 18th index in the vtable */
+    /* will try to call whatever is at the 18th index in the vtable */
+    status = _IO_file_close_it (fp); 
 ```
 
 ```
