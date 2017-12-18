@@ -17,3 +17,5 @@ Heap exploitation is a dark art to me. This repo is an attempt to document my fi
 ### Personal Write-ups on Techniques
 
 * [Null Byte Poisoning ~ The Magic Byte](https://0x00sec.org/t/null-byte-poisoning-the-magic-byte/3874)
+
+* [FILE Structure Internals](https://github.com/xerof4ks/heapwn/blob/master/InCTF/jumping_jacks.md)
