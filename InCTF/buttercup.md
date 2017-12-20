@@ -261,7 +261,7 @@ free(3)
 (0x80)     fastbin[6]: 0x0
 ```
 
-Now with two allocation of size `0x68` we will get back `0x00007ffff7dd1aed` which will allow us to overwrite `__malloc_hook`. 
+Now with two allocations of size `0x68` we will get back `0x00007ffff7dd1aed` which will allow us to overwrite `__malloc_hook`. 
 
 ```python
 # malloc will return 0x555555757190
