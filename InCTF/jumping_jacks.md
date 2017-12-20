@@ -22,7 +22,7 @@ PIE:      No PIE (0x8048000)
 
 Heap stuff :) Let's get down to recon.
 
-#### Add
+#### _Add_
 
 Standard stuff. We enter the size of the requested chunk, an index so that it gets stored at a slot in the bss array and finally
 our input. Note that we are allowed to allocate chunks of size **>=0x7f**. When entering our input, `read` is being used and
@@ -30,24 +30,24 @@ it doesn't null terminate strings, we can get a leak out of it.
 
 ![img](https://github.com/xerof4ks/heapwn/blob/master/InCTF/img/jacks_add.png)
 
-#### Remove
+#### _Remove_
 
 No UAF stuff. The binary free's the pointer depending on the provided index and then zeros out the entry as well.
 
 ![img](https://github.com/xerof4ks/heapwn/blob/master/InCTF/img/jacks_delete.png)
 
-#### Open File
+#### _Open File_
 
 This section of the binary opens up `/dev/null` and stores the FILE struct pointer returned by `fopen` in a global variable called `file`. There's
 more to that, keep that in mind.
 
 ![img](https://github.com/xerof4ks/heapwn/blob/master/InCTF/img/jacks_open.png)
 
-#### Close File
+#### _Close File_
 
 Calls `fclose` on the `/dev/null` file stream as long as the `file` variable is not null.
 
-#### Edit
+#### _Edit_
 
 This is where the bug lies. After reading in data and storing it in a bss buffer, it **null terminates** the address of the FILE
 struct which was returned by `fopen`. For instance, `0x804040` would become `0x804000`. We can abuse that to redirect code
