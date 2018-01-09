@@ -64,37 +64,50 @@ _int_malloc (mstate av, size_t bytes)
     {
       idx = fastbin_index (nb);
       mfastbinptr *fb = &fastbin (av, idx);
-      mchunkptr pp = *fb;
-      REMOVE_FB (fb, victim, pp);
-      if (victim != 0)
-        {
-          if (__builtin_expect (fastbin_index (chunksize (victim)) != idx, 0))
-	    malloc_printerr ("malloc(): memory corruption (fast)");
-          check_remalloced_chunk (av, victim, nb);
-#if USE_TCACHE
-	  /* While we're here, if we see other chunks of the same size,
-	     stash them in the tcache.  */
-	  size_t tc_idx = csize2tidx (nb);
-	  if (tcache && tc_idx < mp_.tcache_bins)
-	    {
-	      mchunkptr tc_victim;
+      mchunkptr pp;
+      victim = *fb;
 
-	      /* While bin not empty and tcache not full, copy chunks over.  */
-	      while (tcache->counts[tc_idx] < mp_.tcache_count
-		     && (pp = *fb) != NULL)
+      if (victim != NULL)
+	{
+	  if (SINGLE_THREAD_P)
+	    *fb = victim->fd;
+	  else
+	    REMOVE_FB (fb, pp, victim);
+	  if (__glibc_likely (victim != NULL))
+	    {
+	      size_t victim_idx = fastbin_index (chunksize (victim));
+	      if (__builtin_expect (victim_idx != idx, 0))
+		malloc_printerr ("malloc(): memory corruption (fast)");
+	      check_remalloced_chunk (av, victim, nb);
+#if USE_TCACHE
+	      /* While we're here, if we see other chunks of the same size,
+		 stash them in the tcache.  */
+	      size_t tc_idx = csize2tidx (nb);
+	      if (tcache && tc_idx < mp_.tcache_bins)
 		{
-		  REMOVE_FB (fb, tc_victim, pp);
-		  if (tc_victim != 0)
+		  mchunkptr tc_victim;
+
+		  /* While bin not empty and tcache not full, copy chunks.  */
+		  while (tcache->counts[tc_idx] < mp_.tcache_count
+			 && (tc_victim = *fb) != NULL)
 		    {
+		      if (SINGLE_THREAD_P)
+			*fb = tc_victim->fd;
+		      else
+			{
+			  REMOVE_FB (fb, pp, tc_victim);
+			  if (__glibc_unlikely (tc_victim == NULL))
+			    break;
+			}
 		      tcache_put (tc_victim, tc_idx);
-	            }
+		    }
 		}
-	    }
 #endif
-          void *p = chunk2mem (victim);
-          alloc_perturb (p, bytes);
-          return p;
-        }
+	      void *p = chunk2mem (victim);
+	      alloc_perturb (p, bytes);
+	      return p;
+	    }
+	}
     }
 
   /*
@@ -112,21 +125,16 @@ _int_malloc (mstate av, size_t bytes)
 
       if ((victim = last (bin)) != bin)
         {
-          if (victim == 0) /* initialization check */
-            malloc_consolidate (av);
-          else
-            {
-              bck = victim->bk;
-	      if (__glibc_unlikely (bck->fd != victim))
-		malloc_printerr
-		  ("malloc(): smallbin double linked list corrupted");
-              set_inuse_bit_at_offset (victim, nb);
-              bin->bk = bck;
-              bck->fd = bin;
+          bck = victim->bk;
+	  if (__glibc_unlikely (bck->fd != victim))
+	    malloc_printerr ("malloc(): smallbin double linked list corrupted");
+          set_inuse_bit_at_offset (victim, nb);
+          bin->bk = bck;
+          bck->fd = bin;
 
-              if (av != &main_arena)
-		set_non_main_arena (victim);
-              check_malloced_chunk (av, victim, nb);
+          if (av != &main_arena)
+	    set_non_main_arena (victim);
+          check_malloced_chunk (av, victim, nb);
 #if USE_TCACHE
 	  /* While we're here, if we see other chunks of the same size,
 	     stash them in the tcache.  */
@@ -153,10 +161,9 @@ _int_malloc (mstate av, size_t bytes)
 		}
 	    }
 #endif
-              void *p = chunk2mem (victim);
-              alloc_perturb (p, bytes);
-              return p;
-            }
+          void *p = chunk2mem (victim);
+          alloc_perturb (p, bytes);
+          return p;
         }
     }
 
@@ -174,7 +181,7 @@ _int_malloc (mstate av, size_t bytes)
   else
     {
       idx = largebin_index (nb);
-      if (have_fastchunks (av))
+      if (atomic_load_relaxed (&av->have_fastchunks))
         malloc_consolidate (av);
     }
 
@@ -579,7 +586,7 @@ _int_malloc (mstate av, size_t bytes)
 
       /* When we are using atomic ops to free fast chunks we can get
          here for all block sizes.  */
-      else if (have_fastchunks (av))
+      else if (atomic_load_relaxed (&av->have_fastchunks))
         {
           malloc_consolidate (av);
           /* restore original bin index */
