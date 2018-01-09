@@ -61,45 +61,58 @@ _int_free (mstate av, mchunkptr p, int have_lock)
 	|| __builtin_expect (chunksize (chunk_at_offset (p, size))
 			     >= av->system_mem, 0))
       {
+	bool fail = true;
 	/* We might not have a lock at this point and concurrent modifications
-	   of system_mem might have let to a false positive.  Redo the test
-	   after getting the lock.  */
-	if (!have_lock
-	    || ({ __libc_lock_lock (av->mutex);
-		  chunksize_nomask (chunk_at_offset (p, size)) <= 2 * SIZE_SZ
-		  || chunksize (chunk_at_offset (p, size)) >= av->system_mem;
-	        }))
+	   of system_mem might result in a false positive.  Redo the test after
+	   getting the lock.  */
+	if (!have_lock)
+	  {
+	    __libc_lock_lock (av->mutex);
+	    fail = (chunksize_nomask (chunk_at_offset (p, size)) <= 2 * SIZE_SZ
+		    || chunksize (chunk_at_offset (p, size)) >= av->system_mem);
+	    __libc_lock_unlock (av->mutex);
+	  }
+
+	if (fail)
 	  malloc_printerr ("free(): invalid next size (fast)");
-	if (! have_lock)
-	  __libc_lock_unlock (av->mutex);
       }
 
     free_perturb (chunk2mem(p), size - 2 * SIZE_SZ);
 
-    set_fastchunks(av);
+    atomic_store_relaxed (&av->have_fastchunks, true);
     unsigned int idx = fastbin_index(size);
     fb = &fastbin (av, idx);
 
     /* Atomically link P to its fastbin: P->FD = *FB; *FB = P;  */
     mchunkptr old = *fb, old2;
-    unsigned int old_idx = ~0u;
-    do
+
+    if (SINGLE_THREAD_P)
       {
-	/* Check that the top of the bin is not the record we are going to add
-	   (i.e., double free).  */
+	/* Check that the top of the bin is not the record we are going to
+	   add (i.e., double free).  */
 	if (__builtin_expect (old == p, 0))
 	  malloc_printerr ("double free or corruption (fasttop)");
-	/* Check that size of fastbin chunk at the top is the same as
-	   size of the chunk that we are adding.  We can dereference OLD
-	   only if we have the lock, otherwise it might have already been
-	   deallocated.  See use of OLD_IDX below for the actual check.  */
-	if (have_lock && old != NULL)
-	  old_idx = fastbin_index(chunksize(old));
-	p->fd = old2 = old;
+	p->fd = old;
+	*fb = p;
       }
-    while ((old = catomic_compare_and_exchange_val_rel (fb, p, old2)) != old2);
+    else
+      do
+	{
+	  /* Check that the top of the bin is not the record we are going to
+	     add (i.e., double free).  */
+	  if (__builtin_expect (old == p, 0))
+	    malloc_printerr ("double free or corruption (fasttop)");
+	  p->fd = old2 = old;
+	}
+      while ((old = catomic_compare_and_exchange_val_rel (fb, p, old2))
+	     != old2);
 
-    if (have_lock && old != NULL && __builtin_expect (old_idx != idx, 0))
+    /* Check that size of fastbin chunk at the top is the same as
+       size of the chunk that we are adding.  We can dereference OLD
+       only if we have the lock, otherwise it might have already been
+       allocated again.  */
+    if (have_lock && old != NULL
+	&& __builtin_expect (fastbin_index (chunksize (old)) != idx, 0))
       malloc_printerr ("invalid fastbin entry (free)");
   }
 
@@ -108,6 +121,11 @@ _int_free (mstate av, mchunkptr p, int have_lock)
   */
 
   else if (!chunk_is_mmapped(p)) {
+
+    /* If we're single-threaded, don't lock the arena.  */
+    if (SINGLE_THREAD_P)
+      have_lock = true;
+
     if (!have_lock)
       __libc_lock_lock (av->mutex);
 
@@ -203,7 +221,7 @@ _int_free (mstate av, mchunkptr p, int have_lock)
     */
 
     if ((unsigned long)(size) >= FASTBIN_CONSOLIDATION_THRESHOLD) {
-      if (have_fastchunks(av))
+      if (atomic_load_relaxed (&av->have_fastchunks))
 	malloc_consolidate(av);
 
       if (av == &main_arena) {
