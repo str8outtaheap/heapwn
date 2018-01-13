@@ -5,6 +5,8 @@ Heap exploitation is a dark art to me. This repo is an attempt to document my fi
 
 * [how2heap](https://github.com/shellphish/how2heap)
 
+* [Syscalls Used by Malloc](https://sploitfun.wordpress.com/2015/02/11/syscalls-used-by-malloc/)
+
 * [Understanding glibc malloc](https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/)
 
 * [Heap Exploitation](https://heap-exploitation.dhavalkapil.com/)
