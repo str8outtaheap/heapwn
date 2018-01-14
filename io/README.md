@@ -1,1 +1,1 @@
-Important structures/functions around file stream I/O operations.
+Important structures/functions on file stream I/O operations.
