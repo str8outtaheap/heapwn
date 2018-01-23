@@ -13,6 +13,7 @@ Heap exploitation is a dark art to me. This repo is an attempt to document my fi
 
 * [tukan](http://tukan.farm/)
 
+* [Play with FILE Structure - Yet Another Binary Exploit Technique](http://4ngelboy.blogspot.gr/2017/11/play-with-file-structure-yet-another.html)
 
 ### Personal Write-ups on Techniques
 
