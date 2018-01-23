@@ -14,11 +14,6 @@
 /* check for mmap()'ed chunk */
 #define chunk_is_mmapped(p) ((p)->mchunk_size & IS_MMAPPED)
 
-/* size field is or'ed with NON_MAIN_ARENA if the chunk was obtained
-   from a non-main arena.  This is only set immediately before handing
-   the chunk to the user, if necessary.  */
-#define NON_MAIN_ARENA 0x4
-
 /* Check for chunk from main arena.  */
 #define chunk_main_arena(p) (((p)->mchunk_size & NON_MAIN_ARENA) == 0)
 
@@ -84,6 +79,44 @@
 
 /* Set size at footer (only when chunk is not in use) */
 #define set_foot(p, s)       (((mchunkptr) ((char *) (p) + (s)))->mchunk_prev_size = (s))
+
+typedef struct malloc_chunk *mbinptr;
+
+/* addressing -- note that bin_at(0) does not exist */
+#define bin_at(m, i) \
+  (mbinptr) (((char *) &((m)->bins[((i) - 1) * 2]))			      \
+             - offsetof (struct malloc_chunk, fd))
+
+#define unsorted_chunks(M)          (bin_at (M, 1))
+
+/* analog of ++bin */
+#define next_bin(b)  ((mbinptr) ((char *) (b) + (sizeof (mchunkptr) << 1)))
+
+/* Reminders about list directionality within bins */
+#define first(b)     ((b)->fd)
+#define last(b)      ((b)->bk)
+
+/*
+   Binmap
+    To help compensate for the large number of bins, a one-level index
+    structure is used for bin-by-bin searching.  `binmap' is a
+    bitvector recording whether bins are definitely empty so they can
+    be skipped over during during traversals.  The bits are NOT always
+    cleared as soon as bins are empty, but instead only
+    when they are noticed to be empty during traversal in malloc.
+ */
+
+/* Conservatively use 32 bits per map word, even if on 64bit system */
+#define BINMAPSHIFT      5
+#define BITSPERMAP       (1U << BINMAPSHIFT)
+#define BINMAPSIZE       (NBINS / BITSPERMAP)
+
+#define idx2block(i)     ((i) >> BINMAPSHIFT)
+#define idx2bit(i)       ((1U << ((i) & ((1U << BINMAPSHIFT) - 1))))
+
+#define mark_bin(m, i)    ((m)->binmap[idx2block (i)] |= idx2bit (i))
+#define unmark_bin(m, i)  ((m)->binmap[idx2block (i)] &= ~(idx2bit (i)))
+#define get_binmap(m, i)  ((m)->binmap[idx2block (i)] & idx2bit (i))
 
 /* Take a chunk off a bin list */
 #define unlink(AV, P, BK, FD) {                                            \
