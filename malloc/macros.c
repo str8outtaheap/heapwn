@@ -80,6 +80,12 @@
 /* Set size at footer (only when chunk is not in use) */
 #define set_foot(p, s)       (((mchunkptr) ((char *) (p) + (s)))->mchunk_prev_size = (s))
 
+#define FASTCHUNKS_BIT        (1U)
+
+#define have_fastchunks(M)     (((M)->flags & FASTCHUNKS_BIT) == 0)
+#define clear_fastchunks(M)    catomic_or (&(M)->flags, FASTCHUNKS_BIT)
+#define set_fastchunks(M)      catomic_and (&(M)->flags, ~FASTCHUNKS_BIT)
+
 typedef struct malloc_chunk *mbinptr;
 
 /* addressing -- note that bin_at(0) does not exist */
