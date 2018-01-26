@@ -15,9 +15,9 @@ Heap exploitation is a dark art to me. This repo is an attempt to document my fi
 
 * [Play with FILE Structure - Yet Another Binary Exploit Technique](http://4ngelboy.blogspot.gr/2017/11/play-with-file-structure-yet-another.html)
 
-### Personal Write-ups on Techniques
+### Personal Write-ups on Heap Internals
 
-* [Null Byte Poisoning ~ The Magic Byte](https://0x00sec.org/t/null-byte-poisoning-the-magic-byte/3874)
+* [Null Byte Poisoning - The Magic Byte](https://0x00sec.org/t/null-byte-poisoning-the-magic-byte/3874)
 
 * [Heap Safari - Thread Local Caching](https://0x00sec.org/t/heap-safari-thread-local-caching/5054)
 
