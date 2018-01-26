@@ -80,6 +80,33 @@
 /* Set size at footer (only when chunk is not in use) */
 #define set_foot(p, s)       (((mchunkptr) ((char *) (p) + (s)))->mchunk_prev_size = (s))
 
+/*
+   FASTBIN_CONSOLIDATION_THRESHOLD is the size of a chunk in free()
+   that triggers automatic consolidation of possibly-surrounding
+   fastbin chunks. This is a heuristic, so the exact value should not
+   matter too much. It is defined at half the default trim threshold as a
+   compromise heuristic to only attempt consolidation if it is likely
+   to lead to trimming. However, it is not dynamically tunable, since
+   consolidation reduces fragmentation surrounding large chunks even
+   if trimming is not used.
+ */
+
+#define FASTBIN_CONSOLIDATION_THRESHOLD  (65536UL)
+
+/*
+   Since the lowest 2 bits in max_fast don't matter in size comparisons,
+   they are used as flags.
+ */
+
+/*
+   FASTCHUNKS_BIT held in max_fast indicates that there are probably
+   some fastbin chunks. It is set true on entering a chunk into any
+   fastbin, and cleared only in malloc_consolidate.
+   The truth value is inverted so that have_fastchunks will be true
+   upon startup (since statics are zero-filled), simplifying
+   initialization checks.
+ */
+
 #define FASTCHUNKS_BIT        (1U)
 
 #define have_fastchunks(M)     (((M)->flags & FASTCHUNKS_BIT) == 0)
