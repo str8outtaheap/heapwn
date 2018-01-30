@@ -1,3 +1,7 @@
+"""
+	Off-by-one vulnerability when changing name => arbitrary memory write after game loss
+"""
+
 from pwn import *
 	
 puts = 0x80483d6
