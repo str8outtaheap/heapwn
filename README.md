@@ -22,3 +22,5 @@ Heap exploitation is a dark art to me. This repo is an attempt to document my fi
 * [Heap Safari - Thread Local Caching](https://0x00sec.org/t/heap-safari-thread-local-caching/5054)
 
 * [FILE Structure Internals](https://github.com/xerof4ks/heapwn/blob/master/InCTF/jumping_jacks.md)
+
+* [__libc_realloc UAF](https://github.com/str4tan/heapwn/blob/master/AceBear/memo_heap.md)
