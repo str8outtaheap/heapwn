@@ -2,7 +2,6 @@ from pwn import *
 from time import sleep
 
 puts   = 0x603018
-strcmp = 0x603040
 
 def alloc(name, prof):
 	r.sendlineafter('>> ', 'show me the marimo')
