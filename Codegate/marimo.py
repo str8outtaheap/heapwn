@@ -1,12 +1,3 @@
-"""
-struct marimo {
-	int32_t time_shit;
-	int32_t size;
-	char* name;
-	char* profile;
-}
-"""
-
 from pwn import *
 from time import sleep
 
