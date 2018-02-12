@@ -53,7 +53,6 @@ def pwn():
 	alloc(0x30, 'E'*8)
 	# Write up to the flag's start
 	flag = get_flag(0x30, 'F'*25)
-
 	log.success('Flag: {}'.format(flag))
 
 	exit()
