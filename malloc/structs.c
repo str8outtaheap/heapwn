@@ -55,6 +55,18 @@ struct malloc_state
   INTERNAL_SIZE_T max_system_mem;
 };
 
+typedef struct _heap_info {
+  mstate ar_ptr; /* Arena for this heap. */
+  struct _heap_info *prev; /* Previous heap. */
+  size_t size;   /* Current size in bytes. */
+  size_t mprotect_size;	/* Size in bytes that has been mprotected
+			   PROT_READ|PROT_WRITE.  */
+  /* Make sure the following data is properly aligned, particularly
+     that sizeof (heap_info) + 2 * SIZE_SZ is a multiple of
+     MALLOC_ALIGNMENT. */
+  char pad[-6 * SIZE_SZ & MALLOC_ALIGN_MASK];
+} heap_info;
+
 static struct malloc_par mp_ =
 {
   .top_pad = DEFAULT_TOP_PAD,
