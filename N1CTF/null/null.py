@@ -1,7 +1,15 @@
 # The goal is to trigger grow_heap and new_heap in sysmalloc multiple times 
 # so that further heap semgnets will be mmap'd BEFORE the thread_arena
-# in order to overflow it and return an address close the function pointer
-# in the bss segment.
+# in order to overflow it, perform a fastbin attack and finally return an address 
+# close to the function pointer in the bss in order to overwrite it with system@PLT.
+
+# The function pointer is called as func_ptr(heap, size). Since we have control over
+# the content of the heap chunk, func_ptr will turn into system(heap) => system('/bin/sh').
+
+# --==[[ Refs
+# [0] https://github.com/str8outtaheap/heapwn/blob/master/malloc/sysmalloc.c
+# [1] https://github.com/str8outtaheap/heapwn/blob/master/malloc/grow_heap.c
+# [2] https://github.com/str8outtaheap/heapwn/blob/master/malloc/new_heap.c
 
 from pwn import *
 from time import sleep
