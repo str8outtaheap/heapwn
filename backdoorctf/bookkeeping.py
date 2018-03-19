@@ -58,8 +58,7 @@ def get_flag():
 	return 
 
 def pwn():
-
-
+	
 	alloc(0x90 - 0x10 - 0xa0, 'A'*8) # 0
 	alloc(0x20 - 0x10 - 0xa0, 'lel') # 1
 	alloc(0x90 - 0x10 - 0xa0, 'A'*8) # 2
