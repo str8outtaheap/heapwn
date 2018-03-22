@@ -7,15 +7,15 @@ Heap exploitation is a dark art to me. This repo is an attempt to document my fi
 
 * [how2heap](https://github.com/shellphish/how2heap)
 
-* [Syscalls Used by Malloc](https://sploitfun.wordpress.com/2015/02/11/syscalls-used-by-malloc/)
+* [ptmalloc fanzine](http://tukan.farm/2016/07/26/ptmalloc-fanzine/)
 
 * [Understanding glibc malloc](https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/)
 
 * [Heap Exploitation](https://heap-exploitation.dhavalkapil.com/)
 
-* [tukan](http://tukan.farm/)
 
 * [Play with FILE Structure - Yet Another Binary Exploit Technique](http://4ngelboy.blogspot.gr/2017/11/play-with-file-structure-yet-another.html)
+
 
 ### Personal Write-ups on Heap Internals
 
