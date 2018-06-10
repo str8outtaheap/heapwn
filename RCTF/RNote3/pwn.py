@@ -1,7 +1,7 @@
 # Uninitialized variable when deleting a note => UAF
 #
-# Viewing a note and then deleting an invalid title will still free whatever is at [rbp - 0x18],
-# leading to a beautiful UAF
+# Viewing a note and then deleting one with an invalid title will still free whatever is at [rbp - 0x18],
+# without zeroing out the entry, leading to a UAF.
 
 from pwn import *
 
