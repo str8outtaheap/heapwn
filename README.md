@@ -15,4 +15,4 @@ Heap exploitation is a dark art to me. This repo is an attempt to document my fi
 
 * [Play with FILE Structure - Yet Another Binary Exploit Technique](http://4ngelboy.blogspot.gr/2017/11/play-with-file-structure-yet-another.html)
 
-* [House of Orange Bypass](http://blog.rh0gue.com/2017-12-31-34c3ctf-300/)
+* [House of Orange Mitigation Bypass](http://blog.rh0gue.com/2017-12-31-34c3ctf-300/)
