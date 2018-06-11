@@ -1,3 +1,5 @@
+# off-by-one in update()
+
 from pwn import *
 
 def alloc(size):
