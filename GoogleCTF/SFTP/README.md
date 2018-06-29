@@ -3,7 +3,7 @@
 > This file server has a sophisticated malloc implementation designed to thwart traditional heap exploitation techniques...
 > [sftp](https://github.com/str8outtaheap/heapwn/blob/master/GoogleCTF/SFTP/bin/sftp)
 
-The challenge description refers to a sophisticated `malloc` implementation. Hence, the heap allocator is the first unit we inspect since all the basic operations of the binary manipulate the memory in the heap through `malloc`, `realloc` and `free`.
+[Zjl](https://github.com/dimos) and I teamed up for SFTP. The challenge description refers to a sophisticated `malloc` implementation. Hence, the heap allocator is the first unit we inspect since all the basic operations of the binary manipulate the memory in the heap through `malloc`, `realloc` and `free`.
 `malloc` returns a pseudo-random address within the boundaries of its "custom" heap:
 
 ```c
