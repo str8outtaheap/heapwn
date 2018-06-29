@@ -514,7 +514,7 @@ $11 = {<text variable, no debug info>} 0x7fb5b6727390 <__libc_system>
 [+] magic chunk  => 0x5d6c2342 (67th allocation)
 [+] victim chunk => 0x5d6c691b (37th allocation)
 [*] diff is 17881 bytes
-[*] Setting up file entries: done
+[+] Setting up file entries: done
 [+] PIE base address => 0x5600b26dd000
 [+] system address => 0x7fc609926390
 [*] Switching to interactive mode
