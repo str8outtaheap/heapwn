@@ -2,7 +2,7 @@
 # with either 0xa, or 0x21, or 0x3f, or 0x40, 0or x22, or 0x27, or 0x23, or 0x25, or 0x26.
 #
 # 0x40 seemed as the most interesting scenario since we're basically telling _int_free
-# that the previous chunk is not in use. We can leverage this into an unsafe unlink attack
+# that the previous chunk is not in use. We can leverage this into an unsafe unlink attack.
 #
 # 0x603000:	0x0000000000000000	0x0000000000000031 <-- name
 # 0x603010:	0x0000000000000000	0x0000000000000008 <-- fake free chunk
@@ -66,8 +66,8 @@
 # 
 # The unlink part is quite convenient for us since we've crafted a fake free chunk
 # before what was used to be |page|. This will result in the global |name| pointer
-# pointing to 0x602028, which is 8 bytes before the book keeping pointers such title, 
-# page and name.
+# pointing to 0x602028, which is 8 bytes before the book keeping pointers in the bss 
+# such title, page and name.
 #
 # After that, we can just overwrite the aforementioned pointers to leak libc
 # by printing a GOT entry and then overwrite __realloc_hook with system.
