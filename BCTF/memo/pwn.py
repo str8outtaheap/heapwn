@@ -42,7 +42,7 @@
 #       last_remainder: 0x0 (size : 0x0) 
 #            unsortbin: 0x0
 #
-# Now if we trigger realloc once agai but this time with a size less than 0x400,
+# Now if we trigger realloc once again, but this time with a size less than 0x400,
 # the previously allocated chunk will be split and free will be called on the 
 # remainder chunk.
 #
