@@ -67,7 +67,7 @@
 # The unlink part is quite convenient for us since we've crafted a fake free chunk
 # before what was used to be |page|. This will result in the global |name| pointer
 # pointing to 0x602028, which is 8 bytes before the book keeping pointers in the bss 
-# such title, page and name.
+# such as title, page and name.
 #
 # After that, we can just overwrite the aforementioned pointers to leak libc
 # by printing a GOT entry and then overwrite __realloc_hook with system.
